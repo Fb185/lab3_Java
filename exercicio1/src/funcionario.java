@@ -86,20 +86,31 @@
 
 // exercicio 3
 import java.util.Timer;
+import java.util.TimerTask;
 
-public class funcionario implements Runnable {
-    public void trabalhar() {
-        System.out.println(nome + " - Comecei");
-        while (pecasProduzidas < TOTAL_PECAS) {
-            try {
+public class funcionario extends TimerTask {
+    Timer timer = new Timer("Timer");
 
-                System.out.println(nome + ": " + ++pecasProduzidas);
-            } catch (InterruptedException ex) {
-                System.out.println("ex");
+    TimerTask trabalhar = new TimerTask() {
+
+        public run() {
+            System.out.println(nome + " - Comecei");
+            while (pecasProduzidas < TOTAL_PECAS) {
+                try {
+
+                    System.out.println(nome + ": " + ++pecasProduzidas);
+                } catch (InterruptedException ex) {
+                    System.out.println("ex");
+                }
+            }
+            if (pecasProduzidas == TOTAL_PECAS) {
+
+                System.out.println(nome + " - terminei.");
+                trabalhar.cancel();
+                timer.cancel();
             }
         }
-        System.out.println(nome + " - terminei.");
-    }
+    };
 
     String nome;
     int delay;
@@ -116,6 +127,7 @@ public class funcionario implements Runnable {
         funcionario manuel = new funcionario("Manuel", 3);
         funcionario pedro = new funcionario("\tPedro", 5);
 
+        timer.scheduleAtFixedRate(trabalhar(), 1, 1);
         System.out.println("Main Termindado");
     }
 }
