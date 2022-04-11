@@ -85,49 +85,84 @@
 // }
 
 // exercicio 3
-import java.util.Timer;
-import java.util.TimerTask;
+// import java.util.Timer;
+// import java.util.TimerTask;
 
-public class funcionario extends TimerTask {
-    Timer timer = new Timer("Timer");
+// public class funcionario extends TimerTask {
+//     Timer timer = new Timer("Timer");
+
+//     TimerTask trabalhar = new TimerTask() {
+
+//         public run() {
+//             System.out.println(nome + " - Comecei");
+//             while (pecasProduzidas < TOTAL_PECAS) {
+//                 try {
+
+//                     System.out.println(nome + ": " + ++pecasProduzidas);
+//                 } catch (InterruptedException ex) {
+//                     System.out.println("ex");
+//                 }
+//             }
+//             if (pecasProduzidas == TOTAL_PECAS) {
+
+//                 System.out.println(nome + " - terminei.");
+//                 trabalhar.cancel();
+//                 timer.cancel();
+//             }
+//         }
+//     };
+
+//     String nome;
+//     int delay;
+//     int pecasProduzidas = 0;
+//     static int TOTAL_PECAS = 10;
+
+//     // constructor
+//     public funcionario(String nome, int delay) {
+//         this.nome = nome;
+//         this.delay = delay;
+//     }
+
+//     public static void main(String[] args) {
+//         funcionario manuel = new funcionario("Manuel", 3);
+//         funcionario pedro = new funcionario("\tPedro", 5);
+
+//         timer.scheduleAtFixedRate(trabalhar(), 1, 1);
+//         System.out.println("Main Termindado");
+//     }
+// }
+import java.util.TimerTask;
+import java.util.Timer;
+
+public class Funcionario extends Timer {
+
+    Timer timer = new timer();
+    int maximo = 10;
+    int a;
+    int delay = 2000;
 
     TimerTask trabalhar = new TimerTask() {
-
-        public run() {
-            System.out.println(nome + " - Comecei");
-            while (pecasProduzidas < TOTAL_PECAS) {
-                try {
-
-                    System.out.println(nome + ": " + ++pecasProduzidas);
-                } catch (InterruptedException ex) {
-                    System.out.println("ex");
-                }
-            }
-            if (pecasProduzidas == TOTAL_PECAS) {
-
-                System.out.println(nome + " - terminei.");
+        @Override
+        public void run() {
+            System.out.println("Codigo que vai rodar em loop.");
+            a++;
+            if (a == maximo) {
+                System.out.println("Este if serve para parar o timr");
                 trabalhar.cancel();
                 timer.cancel();
             }
         }
     };
 
-    String nome;
-    int delay;
-    int pecasProduzidas = 0;
-    static int TOTAL_PECAS = 10;
-
-    // constructor
-    public funcionario(String nome, int delay) {
-        this.nome = nome;
-        this.delay = delay;
+    Funcionario() {
+        // public void inicio() {
+        timer.scheduleAtFixedRate(trabalhar, this.delay, this.delay);
+        // }
     }
 
     public static void main(String[] args) {
-        funcionario manuel = new funcionario("Manuel", 3);
-        funcionario pedro = new funcionario("\tPedro", 5);
+        Funcionario funcionario = new Funcionario();
 
-        timer.scheduleAtFixedRate(trabalhar(), 1, 1);
-        System.out.println("Main Termindado");
     }
+
 }
