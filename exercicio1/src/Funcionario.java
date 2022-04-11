@@ -144,10 +144,10 @@ public class Funcionario extends Timer {
     TimerTask trabalhar = new TimerTask() {
         @Override
         public void run() {
-            System.out.println("Codigo que vai rodar em loop.");
+            System.out.println("loop");
             a++;
             if (a == maximo) {
-                System.out.println("Este if serve para parar o timr");
+                System.out.println("a");
                 trabalhar.cancel();
                 timer.cancel();
             }
