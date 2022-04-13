@@ -1,3 +1,6 @@
+import java.util.Timer;
+import java.util.TimerTask;
+
 // uncomment the exercise you want to run
 
 //exercicio 1
@@ -85,84 +88,55 @@
 // }
 
 // exercicio 3
-// import java.util.Timer;
-// import java.util.TimerTask;
+public class Funcionario {
 
-// public class funcionario extends TimerTask {
-//     Timer timer = new Timer("Timer");
+    // constructor
+    public Funcionario(String nome, int delay) {
+        this.nome = nome;
+        this.delay = delay;
+        trabalhar();
+    }
 
-//     TimerTask trabalhar = new TimerTask() {
+    String nome;
+    int delay;
+    int pecasProduzidas = 0;
+    static int TOTAL_PECAS = 10;
 
-//         public run() {
-//             System.out.println(nome + " - Comecei");
-//             while (pecasProduzidas < TOTAL_PECAS) {
-//                 try {
+    public void trabalhar() {
+        System.out.println(nome + " - Comecei");
+        while (pecasProduzidas < TOTAL_PECAS) {
+            try {
 
-//                     System.out.println(nome + ": " + ++pecasProduzidas);
-//                 } catch (InterruptedException ex) {
-//                     System.out.println("ex");
-//                 }
-//             }
-//             if (pecasProduzidas == TOTAL_PECAS) {
-
-//                 System.out.println(nome + " - terminei.");
-//                 trabalhar.cancel();
-//                 timer.cancel();
-//             }
-//         }
-//     };
-
-//     String nome;
-//     int delay;
-//     int pecasProduzidas = 0;
-//     static int TOTAL_PECAS = 10;
-
-//     // constructor
-//     public funcionario(String nome, int delay) {
-//         this.nome = nome;
-//         this.delay = delay;
-//     }
-
-//     public static void main(String[] args) {
-//         funcionario manuel = new funcionario("Manuel", 3);
-//         funcionario pedro = new funcionario("\tPedro", 5);
-
-//         timer.scheduleAtFixedRate(trabalhar(), 1, 1);
-//         System.out.println("Main Termindado");
-//     }
-// }
-import java.util.TimerTask;
-import java.util.Timer;
-
-public class Funcionario extends Timer {
-
-    Timer timer = new timer();
-    int maximo = 10;
-    int a;
-    int delay = 2000;
-
-    TimerTask trabalhar = new TimerTask() {
-        @Override
-        public void run() {
-            System.out.println("loop");
-            a++;
-            if (a == maximo) {
-                System.out.println("a");
-                trabalhar.cancel();
-                timer.cancel();
+                Thread.sleep(delay);
+                System.out.println(nome + ": " + ++pecasProduzidas);
+            } catch (InterruptedException ex) {
+                System.out.println("ex");
             }
         }
-    };
-
-    Funcionario() {
-        // public void inicio() {
-        timer.scheduleAtFixedRate(trabalhar, this.delay, this.delay);
-        // }
+        System.out.println(nome + " - terminei.");
     }
 
     public static void main(String[] args) {
-        Funcionario funcionario = new Funcionario();
+
+        Timer timer = new Timer();
+        TimerTask taskManuel = new TimerTask() {
+            public void run() {
+                Funcionario manuel = new Funcionario("Manuel", 3);
+                System.out.println("task is complete");
+
+            }
+        };
+        TimerTask taskPedro = new TimerTask() {
+            public void run() {
+                Funcionario pedro = new Funcionario("Pedro", 3);
+                System.out.println("task is complete");
+                timer.cancel();
+
+            }
+
+        };
+        timer.scheduleAtFixedRate(taskManuel, 3, 100);
+        timer.scheduleAtFixedRate(taskPedro, 5, 100);
 
     }
-
 }
